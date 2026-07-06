@@ -1,2 +1,2 @@
 def afk():
-    xp_afk = 1
+    xp_afk = -1
