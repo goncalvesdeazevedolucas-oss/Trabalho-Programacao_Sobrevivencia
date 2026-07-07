@@ -5,7 +5,7 @@ import msvcrt
 
 def afk():
     xp_afk= 0
-    print("Aperte Qualquer Tecla para Parar")
+    print("Aperte Qualquer Tecla para Começar a Jornada")
     while True:
         xp_afk += random.randint( 10, 20)
         time.sleep(1)
@@ -15,21 +15,23 @@ def afk():
             return xp_afk
             break
 def chamar_status(xp,vida,sorte,dano,level):
-    print(xp)
-    print(vida)
-    print(sorte)
-    print(dano)
-    print(level)
-
-start=input("""
+    print("XP=",xp)
+    print("Vida=",vida)
+    print("Sorte=",sorte)
+    print("Dano=",dano)
+    print("Level=",level)
+def start():
+    return input("""
       1 - Começar Modo Jornada
       2 - Começar Modo AFK
       
-      Escolha:
-      """)
-if start == "2" or start.upper() == "AFK":
+      Escolha:""")
+    
+choose= start()
+if choose == "2" or choose.upper() == "AFK":
     xp = 0
     xp += afk()
+
 
 print(xp)
 # nome = input("Insira o Nome do seu Personagem: ")
