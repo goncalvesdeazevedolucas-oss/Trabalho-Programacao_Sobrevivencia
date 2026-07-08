@@ -31,7 +31,9 @@ def start():
 def modo(choose):
     if choose == "2" or choose.upper() == "AFK":
         xp = 0
-        xp += afk()       
+        xp += afk()
+    elif choose = "1" or choose.upper() == "JORNADA":
+        jornada()
 
 xp = 0
 choose= start()
