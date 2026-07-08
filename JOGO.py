@@ -49,7 +49,7 @@ comeco= modo(choose)
 if comeco == "AFK":
     xp += afk()
     jornada()
-    print(xp)
+    print("XP ACUMULADO:", xp)
 elif comeco == "JORNADA":
     print(xp)
     jornada()
