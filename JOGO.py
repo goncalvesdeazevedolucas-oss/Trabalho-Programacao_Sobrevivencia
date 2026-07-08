@@ -12,7 +12,7 @@ def afk():
         print(f"XP Acumulado: {xp_afk}")
         if msvcrt.kbhit():
             msvcrt.getch()
-            return xp_afk and jornada()
+            return xp_afk
             break
 def jornada():
     print("Começa a jornada")
@@ -30,19 +30,32 @@ def start():
       Escolha:""")
 def modo(choose):
     if choose == "2" or choose.upper() == "AFK":
-        xp = 0
-        xp += afk()
-    elif choose = "1" or choose.upper() == "JORNADA":
-        jornada()
+        return "AFK"
+    elif choose == "1" or choose.upper() == "JORNADA":
+        return "JORNADA"
+    else:
+        choose = start()
+        return modo(choose)
+      
 
 xp = 0
-choose= start()
-modo= choose
+vida = random.randint(15,20)
+sorte = random.randint(0,100)
+dano= 10
+level = 1
 
+choose = start()
+comeco= modo(choose)
+if comeco == "AFK":
+    xp += afk()
+    jornada()
+    print(xp)
+elif comeco == "JORNADA":
+    print(xp)
+    jornada()
 
-print(xp)
 # nome = input("Insira o Nome do seu Personagem: ")
 # classe = input("Escolha sua Classe [1- Médico ], [ 2- Sobrevivente], [3- Idiota] :")
 #Médico +5 Vida , 1 medkit
 #Sobrevivente +20 Vida
-#Idiota -20 Sorte 
+#Idiota -20 Sorte
