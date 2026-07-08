@@ -12,8 +12,10 @@ def afk():
         print(f"XP Acumulado: {xp_afk}")
         if msvcrt.kbhit():
             msvcrt.getch()
-            return xp_afk
+            return xp_afk and jornada()
             break
+def jornada():
+    print("Começa a jornada")
 def chamar_status(xp,vida,sorte,dano,level):
     print("XP=",xp)
     print("Vida=",vida)
@@ -26,11 +28,14 @@ def start():
       2 - Começar Modo AFK
       
       Escolha:""")
-    
+def modo(choose):
+    if choose == "2" or choose.upper() == "AFK":
+        xp = 0
+        xp += afk()       
+
+xp = 0
 choose= start()
-if choose == "2" or choose.upper() == "AFK":
-    xp = 0
-    xp += afk()
+modo= choose
 
 
 print(xp)
