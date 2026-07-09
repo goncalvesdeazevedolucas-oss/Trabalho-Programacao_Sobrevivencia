@@ -8,11 +8,12 @@ def afk():
     print("Aperte Qualquer Tecla para Começar a Jornada")
     while True:
         xp_afk += random.randint(5,17)
-        bolada = random.randint(0, 150)
+        bolada_chance = random.randint(0, 150)
         time.sleep(1)
-        if bolada == 75:
-        xp_afk += random.randint(300,750)
-        print(f"XP Acumulado", {xp_afk}, "BOLADA!!")
+        if bolada_chance == 75:
+            bolada= random.randint(300,750)
+            xp_afk += bolada
+            print(f"XP Acumulado !{xp_afk}! BOLADA!(+{bolada})!")
         else:
             print(f"XP Acumulado: {xp_afk}")
         if msvcrt.kbhit():
