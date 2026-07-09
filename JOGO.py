@@ -13,7 +13,7 @@ def afk():
         if bolada_chance == 75:
             bolada= random.randint(300,750)
             xp_afk += bolada
-            print(f"XP Acumulado !{xp_afk}! BOLADA!(+{bolada})!")
+            print(f"XP Acumulado {xp_afk} BOLADA!(+{bolada})!")
         else:
             print(f"XP Acumulado: {xp_afk}")
         if msvcrt.kbhit():
@@ -46,10 +46,10 @@ def modo(choose):
         choose = start()
         return modo(choose)
       
-
+inventario= list()
 xp = 0
 vida = random.randint(15,20)
-sorte = random.randint(0,100)
+sorte = random.randint(0,50)
 dano= 10
 level = 1
 
@@ -59,12 +59,16 @@ if comeco == "AFK":
     xp += afk()
     jornada()
 elif comeco == "JORNADA":
+    nome = input("Insira o Nome do seu Personagem: ")
+    classe = input("Escolha sua Classe [1- Médico ], [ 2- Sobrevivente], [3- Idiota] :")
+    if classe == "1" or classe.upper() == "MEDICO" or "MÉDICO" or "MÈDICO":
+        vida += 5
+        inventario.append("Medkit")
     jornada()
 
 
 
-# nome = input("Insira o Nome do seu Personagem: ")
-# classe = input("Escolha sua Classe [1- Médico ], [ 2- Sobrevivente], [3- Idiota] :")
-#Médico +5 Vida , 1 medkit
-#Sobrevivente +20 Vida
-#Idiota -20 Sorte
+
+# Médico +5 Vida , 1 medkit
+# Sobrevivente +20 Vida
+# Idiota -20 Sorte
