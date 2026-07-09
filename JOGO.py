@@ -69,6 +69,7 @@ elif comeco == "JORNADA":
 
 
 
+
 # Médico +5 Vida , 1 medkit
 # Sobrevivente +20 Vida
 # Idiota -20 Sorte
