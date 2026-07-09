@@ -7,21 +7,29 @@ def afk():
     xp_afk= 0
     print("Aperte Qualquer Tecla para Começar a Jornada")
     while True:
-        xp_afk += random.randint( 10, 20)
+        xp_afk += random.randint(5,17)
+        bolada = random.randint(0, 150)
         time.sleep(1)
-        print(f"XP Acumulado: {xp_afk}")
+        if bolada == 75:
+        xp_afk += random.randint(300,750)
+        print(f"XP Acumulado", {xp_afk}, "BOLADA!!")
+        else:
+            print(f"XP Acumulado: {xp_afk}")
         if msvcrt.kbhit():
             msvcrt.getch()
             return xp_afk
             break
 def jornada():
     print("Começa a jornada")
+    chamar_status(xp,vida,sorte,dano,level)
 def chamar_status(xp,vida,sorte,dano,level):
-    print("XP=",xp)
-    print("Vida=",vida)
-    print("Sorte=",sorte)
-    print("Dano=",dano)
-    print("Level=",level)
+    print(F"""
+        XP={xp}
+        Vida={vida}
+        Sorte={sorte}
+        Dano={dano}
+        Level={level}
+        """)
 def start():
     return input("""
       1 - Começar Modo Jornada
@@ -49,10 +57,10 @@ comeco= modo(choose)
 if comeco == "AFK":
     xp += afk()
     jornada()
-    print("XP ACUMULADO:", xp)
 elif comeco == "JORNADA":
-    print(xp)
     jornada()
+
+
 
 # nome = input("Insira o Nome do seu Personagem: ")
 # classe = input("Escolha sua Classe [1- Médico ], [ 2- Sobrevivente], [3- Idiota] :")
