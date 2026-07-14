@@ -64,24 +64,47 @@ if comeco == "AFK":
     jornada()
 elif comeco == "JORNADA":
     nome = input("Insira o Nome do seu Personagem: ")
-    if nome == "":
+    if len(nome) == 0:
         nome = "???"
     while True:
         classe = input("Escolha sua Classe [1- Médico ], [ 2- Sobrevivente], [3- Idiota] :")
         if classe == "1" or noacent(classe).upper() == "MEDICO":
             classe = "MÉDICO"
             vida += 5
+            print("Você recebeu +5 de vida")
+            time.sleep(0.5)
             inventario.append("Medkit")
+            print("Você recebeu um Medkit")
             jornada()
             break
         elif classe == "2" or noacent(classe).upper() == "SOBREVIVENTE":
             classe= "SOBREVIVENTE"
             vida += 25
+            print(f"Você recebeu +25 de Vida, Vida Total({vida})")
             break
         elif classe == "3" or noacent(classe).upper() == "IDIOTA":
-            classe = "IDIOTA"
-            sorte += -20
-            break
+            confirm=input("""
+                  Você tem certeza disso?
+                      Sim(Y) | Não(N)
+                          
+                  """)
+            if confirm.upper() == "Y":
+                classe = "IDIOTA"
+                sorte += -20
+                print("""
+                    --------------------
+                    Você é idiota????
+                    Recebeu -20 de sorte
+                    --------------------
+                    """)
+                break
+            elif confirm.upper() == "N":
+                continue
+            # else confirm.upper() not == "Y" or "N"
+            #     print("""
+            #           =/ Escolha outra classe  =/
+            #           """)
+                # continue
         elif classe == "2026302743":
             classe= "ADMIM"
             vida = 2000000000
@@ -89,7 +112,7 @@ elif comeco == "JORNADA":
             sorte = 100
             level = 100
             inventario.append("?")
-            chamar_status(xp, vida, sorte, dano, level,)
+            chamar_status(xp, vida, sorte, dano, level)
             break
         else:
             continue
@@ -97,7 +120,7 @@ elif comeco == "JORNADA":
 print(nome)
 print(classe)
 print(inventario)  
-
+chamar_status(xp,vida,sorte,dano,level)
 
 
 
