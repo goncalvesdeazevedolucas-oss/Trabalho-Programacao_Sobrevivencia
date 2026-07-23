@@ -1,8 +1,9 @@
 import random
 import time
 import math
-import msvcrt
-import unicodedata
+import msvcrt #StackOverFlow
+import unicodedata #Video Youtube
+import os #Alisson 
 
 def afk():
     xp_afk= 0
@@ -22,7 +23,6 @@ def afk():
             return xp_afk
             break
 def jornada():
-    espaco()
     print("Começa a jornada")
     chamar_status(xp,vida,sorte,dano,level)
 def chamar_status(xp,vida,sorte,dano,level):
@@ -50,16 +50,9 @@ def modo(choose):
 def normal(palavra):        #https://www.youtube.com/watch?v=ZPqb8k76sK4&t=437s
     nfdk_normalizacao= unicodedata.normalize('NFKD', palavra)
     return ''.join([x for x in nfdk_normalizacao if not unicodedata.combining(x)]).upper()
-def espaco():
-    print(""" 
-          
-          
-          
-          
-          
-          
-          
-          """)
+def limpar():
+    time.sleep(0.1)
+    os.system("cls")
 
 inventario= list()
 xp = 0
