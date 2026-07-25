@@ -7,7 +7,7 @@ import os #Alisson
 
 def afk():
     xp_afk= 0
-    print("Aperte Qualquer Tecla para Começar a Jornada")
+    print("Aperte Qualquer Tecla para Parar e Começar a Jornada")
     while True:
         xp_afk += random.randint(5,17)
         bolada_chance = random.randint(0, 150)
@@ -108,7 +108,84 @@ def basico():
                 continue
         limpar()
         return xp_e, vida_e, sorte_e, item_e, dano_e, level_e, nome, classe        
-        
+def opcoes(sorte):
+    while True:
+        print("""
+            O que você irá fazer ??
+    1-Buscar recursos | 2-Ver Perfil | 3-Esperar por um Animal
+                4- Parar o Jogo
+            """)
+        choose= input("Escolha: ")
+        if choose == '1':
+            opcoes()
+        elif choose == '2':
+            chamar_status(xp,vida,sorte,dano,level,nome,inventario,classe)
+            print("Aperte Qualquer tecla para continuar")
+            if msvcrt.kbhit():
+                msvcrt.getch()
+                limpar()
+                opcoes()
+        elif choose == '3':
+            limpar()
+            while True:
+                chance= random.randint(1,30)
+                animal = animal()
+                if chance in range(1,5):
+                    print(f"Você avistou um{animal}")
+                    #CONTINUAR DAQUI HOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+                    #AQUIIIIIIIIII TU PAROU AQUIIIIIIIII
+                elif chance in range(6,20):
+                    print("Nenhum animal apareceu")
+                    time.sleep(1.5)
+                    
+                    break
+                elif chance in range(21,28):
+                    print(f"Um{animal} Apareceu mas você o Espantou")
+                    break
+                else:
+                    print(f"Nada Aparece e você é picado por Aranha")
+                    if sorte <= 20:
+                        return 1 #-8 de vida
+                    elif sorte <= 40:
+                        return 2 #-4 de vida
+                    elif sorte >= 80:
+                        return 3 # -0 de vida
+                    elif sorte >=50:
+                        return 4 # -1 de vida
+            limpar()
+            opcoes()
+        elif choose == '4':
+            limpar()
+            
+            return -1 #BREAK 
+            
+        else:
+            limpar()
+            print("Opção Inválida")
+            continue
+
+def animal():
+    animal= random.randint(1,5)
+    if animal == 1:
+        return "a Ave"
+    elif animal == 2:
+        return " Javali"
+    elif animal == 3:
+        return " Cobra"
+    elif animal == 4:
+        return " Coelho"
+
+
+
+
+
+
+
+
+
+
+
+
 
 inventario= list()
 xp = 0
@@ -128,10 +205,28 @@ if item_e == None:
 else:
     inventario.append(item_e)
 
+
+while True:
+    if vida <= 0:
+        limpar()
+        print("Morreu")
+        break
+    a= opcoes()
+    if a == -1:
+        limpar()
+        print("Jogo Encerrado")
+        break
+    elif a == 1:
+        print("Você perdeu -8 de Vida")
+        vida += -8
+        continue
+    elif a == 2:
+        print("Você perdeu -4 de Vida")
+    elif a == 3:
+        print("Você não perdeu Vida, Que Sorte")
+    elif a == 4:
+        print("Você perdeu -1 de Vida")
     
-
-chamar_status(xp,vida,sorte,dano,level,nome,inventario,classe)
-
 
 
 # Médico +5 Vida , 1 medkit
