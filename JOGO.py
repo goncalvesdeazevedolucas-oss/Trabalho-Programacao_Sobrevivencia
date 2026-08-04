@@ -176,17 +176,6 @@ def animal():
         return " Coelho"
 
 
-
-
-
-
-
-
-
-
-
-
-
 inventario= list()
 xp = 0
 vida = random.randint(15,25)
