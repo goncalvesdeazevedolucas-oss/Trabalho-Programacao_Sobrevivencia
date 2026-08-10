@@ -200,7 +200,7 @@ while True:
         limpar()
         print("Morreu")
         break
-    a= opcoes()
+    a= opcoes(sorte)
     if a == -1:
         limpar()
         print("Jogo Encerrado")
