@@ -108,7 +108,7 @@ def basico():
                 continue
         limpar()
         return xp_e, vida_e, sorte_e, item_e, dano_e, level_e, nome, classe        
-def opcoes():
+def opcoes(sorte):
     while True:
         print("""
             O que você irá fazer ??
@@ -126,7 +126,7 @@ def opcoes():
                 limpar()
                 opcoes()
         elif choose == '3':
-            
+            animal(sorte)
         elif choose == '4':
             limpar()
             
@@ -139,7 +139,37 @@ def opcoes():
 def batalha(random_animal): ########################
     
 def animal(sorte):
-    pass #####################################
+    while True:
+        chance= random.randint(1,30)
+        animal = animal()
+        if chance in range(1,5):
+            print(f"Você avistou um{animal}")
+            print(".", end="", flush=True)
+            time.sleep(1.5)
+
+            print(".", end="", flush=True)
+            time.sleep(1.5)
+
+            print(".", flush=True)
+            time.sleep(1.5)
+        elif chance in range(6,20):
+            print("Nenhum animal apareceu")
+            time.sleep(1.5)
+            
+            break
+        elif chance in range(21,28):
+            print(f"Um{animal} Apareceu mas você o Espantou")
+            break
+        else:
+            print(f"Nada Aparece e você é picado por Aranha")
+            if sorte <= 20:
+                return 1 #-8 de vida
+            elif sorte <= 40:
+                return 2 #-4 de vida
+            elif sorte >= 80:
+                return 3 # -0 de vida
+            elif sorte >=50:
+                return 4 # -1 de vida
 
 def random_animal():
     animal= random.randint(1,5)
