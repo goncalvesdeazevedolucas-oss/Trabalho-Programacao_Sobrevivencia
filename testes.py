@@ -11,14 +11,16 @@
 # time.sleep(2)
 # os.system("cls")
 
-def modo():
-    return "m"
+# def modo():
+#     return "m"
 
-inventario = list()
-item_e = modo()
-if item_e == None:
-    pass
-else:
-    inventario.append(item_e)
+# inventario = list()
+# item_e = modo()
+# if item_e == None:
+#     pass
+# else:
+#     inventario.append(item_e)
     
-print(inventario)
+# print(inventario)
+xp_e, vida_e, sorte_e, dano_e, level_e= 0,0,0,0,0
+print(xp_e, vida_e, sorte_e, dano_e, level_e)

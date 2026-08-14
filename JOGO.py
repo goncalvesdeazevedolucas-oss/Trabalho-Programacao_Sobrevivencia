@@ -108,7 +108,7 @@ def basico():
                 continue
         limpar()
         return xp_e, vida_e, sorte_e, item_e, dano_e, level_e, nome, classe        
-def opcoes(sorte):
+def opcoes():
     while True:
         print("""
             O que você irá fazer ??
@@ -126,34 +126,7 @@ def opcoes(sorte):
                 limpar()
                 opcoes()
         elif choose == '3':
-            limpar()
-            while True:
-                chance= random.randint(1,30)
-                animal = animal()
-                if chance in range(1,5):
-                    print(f"Você avistou um{animal}")
-                    #CONTINUAR DAQUI HOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-                    #AQUIIIIIIIIII TU PAROU AQUIIIIIIIII
-                elif chance in range(6,20):
-                    print("Nenhum animal apareceu")
-                    time.sleep(1.5)
-                    
-                    break
-                elif chance in range(21,28):
-                    print(f"Um{animal} Apareceu mas você o Espantou")
-                    break
-                else:
-                    print(f"Nada Aparece e você é picado por Aranha")
-                    if sorte <= 20:
-                        return 1 #-8 de vida
-                    elif sorte <= 40:
-                        return 2 #-4 de vida
-                    elif sorte >= 80:
-                        return 3 # -0 de vida
-                    elif sorte >=50:
-                        return 4 # -1 de vida
-            limpar()
-            opcoes()
+            
         elif choose == '4':
             limpar()
             
@@ -163,8 +136,12 @@ def opcoes(sorte):
             limpar()
             print("Opção Inválida")
             continue
+def batalha(random_animal): ########################
+    
+def animal(sorte):
+    pass #####################################
 
-def animal():
+def random_animal():
     animal= random.randint(1,5)
     if animal == 1:
         return "a Ave"
@@ -188,14 +165,21 @@ batalhas = 0
 xp_e, vida_e, sorte_e, item_e, dano_e, level_e, nome, classe = basico()
 
 xp, vida, sorte, dano, level = xp_e + xp, vida_e + vida, sorte_e + sorte, dano_e + dano, level_e + level
-
+xp_e, vida_e, sorte_e, dano_e, level_e= 0,0,0,0,0
 if item_e == None:
     pass
 else:
     inventario.append(item_e)
 
+item_e= None
 
 while True:
+    xp, vida, sorte, dano, level = xp_e + xp, vida_e + vida, sorte_e + sorte, dano_e + dano, level_e + level
+    if item_e == None:
+        pass
+    else:
+        inventario.append(item_e)
+    item_e = None
     if vida <= 0:
         limpar()
         print("Morreu")
@@ -215,9 +199,8 @@ while True:
         print("Você não perdeu Vida, Que Sorte")
     elif a == 4:
         print("Você perdeu -1 de Vida")
-    
+    elif a == 0:
+        continue
+    opcoes()
 
 
-# Médico +5 Vida , 1 medkit
-# Sobrevivente +20 Vida
-# Idiota -20 Sorte
