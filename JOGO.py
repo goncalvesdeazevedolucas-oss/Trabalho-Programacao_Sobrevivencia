@@ -1,9 +1,9 @@
 import random
 import time
-import math
 import msvcrt #StackOverFlow
 import unicodedata #Video Youtube
 import os #Alisson 
+from funcoes import criar_funcoes
 
 def afk():
     xp_afk= 0
@@ -109,7 +109,6 @@ def basico():
         limpar()
         return xp_e, vida_e, sorte_e, item_e, dano_e, level_e, nome, classe        
 def opcoes(sorte):
-    while True:
         print("""
             O que você irá fazer ??
     1-Buscar recursos | 2-Ver Perfil | 3-Esperar por um Animal
@@ -119,7 +118,7 @@ def opcoes(sorte):
         if choose == '1':
             opcoes()
         elif choose == '2':
-            chamar_status(xp,vida,sorte,dano,level,nome,inventario,classe)
+            chamar_status(xp,vida,sorte,dano,level,nome,inventario.index(+1),classe)
             print("Aperte Qualquer tecla para continuar")
             if msvcrt.kbhit():
                 msvcrt.getch()
@@ -135,13 +134,11 @@ def opcoes(sorte):
         else:
             limpar()
             print("Opção Inválida")
-            continue
-def batalha(random_animal): ########################
-    
+            return 0
 def animal(sorte):
     while True:
         chance= random.randint(1,30)
-        animal = animal()
+        animal = random_animal()
         if chance in range(1,5):
             print(f"Você avistou um{animal}")
             print(".", end="", flush=True)
@@ -152,6 +149,18 @@ def animal(sorte):
 
             print(".", flush=True)
             time.sleep(1.5)
+            print(f"VOCÊ FOI VISTO CORRA OU BATALHE PELA SUA VIDA")
+            choose= input("""
+                          O que você faz????
+                          1 - Correr
+                          2 - Batalhar
+                          """)
+            if normal(choose) == "1" or "correr":
+                print("Você perde 2 de vida por cansaço")
+                return 0, -2, None
+            elif normal(choose) =='2' or 'batalhar':
+                return batalha(animal)
+                
         elif chance in range(6,20):
             print("Nenhum animal apareceu")
             time.sleep(1.5)
@@ -163,14 +172,13 @@ def animal(sorte):
         else:
             print(f"Nada Aparece e você é picado por Aranha")
             if sorte <= 20:
-                return 1 #-8 de vida
+                return 1, -8, None#-8 de vida
             elif sorte <= 40:
-                return 2 #-4 de vida
+                return 2, -4, None #-4 de vida
             elif sorte >= 80:
-                return 3 # -0 de vida
+                return 3, 0, None # -0 de vida
             elif sorte >=50:
-                return 4 # -1 de vida
-
+                return 4, -1, None # -1 de vida
 def random_animal():
     animal= random.randint(1,5)
     if animal == 1:
@@ -181,6 +189,8 @@ def random_animal():
         return " Cobra"
     elif animal == 4:
         return " Coelho"
+def batalha(random_animal): ########################
+    pass
 
 
 inventario= list()
@@ -209,20 +219,22 @@ while True:
         pass
     else:
         inventario.append(item_e)
+        
     item_e = None
+    xp_e, vida_e, sorte_e, dano_e, level_e= 0,0,0,0,0
     if vida <= 0:
         limpar()
         print("Morreu")
         break
-    a= opcoes(sorte)
+    
+    a, vida_e, item_e = opcoes(sorte)
+    
     if a == -1:
         limpar()
         print("Jogo Encerrado")
         break
     elif a == 1:
         print("Você perdeu -8 de Vida")
-        vida += -8
-        continue
     elif a == 2:
         print("Você perdeu -4 de Vida")
     elif a == 3:
@@ -231,6 +243,5 @@ while True:
         print("Você perdeu -1 de Vida")
     elif a == 0:
         continue
-    opcoes()
 
 
