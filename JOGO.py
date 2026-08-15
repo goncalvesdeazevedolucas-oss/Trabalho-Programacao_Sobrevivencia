@@ -21,8 +21,8 @@ def afk():
         if msvcrt.kbhit():
             msvcrt.getch()
             limpar()
-            return xp_afk
             break
+        return xp_afk
 def chamar_status(xp,vida,sorte,dano,level,nome,inventario,classe):
     print(f"Nome: {nome}")
     print(f"Inventario: {"".join(inventario)}")
@@ -135,7 +135,7 @@ def opcoes(sorte):
             limpar()
             print("Opção Inválida")
             return 0
-def animal(sorte):
+def animal(sorte,dano,vida):
     while True:
         chance= random.randint(1,30)
         animal = random_animal()
@@ -150,17 +150,21 @@ def animal(sorte):
             print(".", flush=True)
             time.sleep(1.5)
             print(f"VOCÊ FOI VISTO CORRA OU BATALHE PELA SUA VIDA")
-            choose= input("""
-                          O que você faz????
-                          1 - Correr
-                          2 - Batalhar
-                          """)
-            if normal(choose) == "1" or "correr":
-                print("Você perde 2 de vida por cansaço")
-                return 0, -2, None
-            elif normal(choose) =='2' or 'batalhar':
-                return batalha(animal)
-                
+            while True:
+                choose= input("""
+                            O que você faz????
+                            1 - Correr
+                            2 - Batalhar
+                            """)
+                if normal(choose) == "1" or "correr":
+                    print("Você perde 2 de vida por cansaço")
+                    return 0, -2, None
+                elif normal(choose) =="2" or "batalhar":
+                    vida_e, item_e = batalha(animal,dano,vida)
+                    return 0, vida_e, item_e
+                else:
+                    limpar()
+                    continue
         elif chance in range(6,20):
             print("Nenhum animal apareceu")
             time.sleep(1.5)
@@ -189,8 +193,16 @@ def random_animal():
         return " Cobra"
     elif animal == 4:
         return " Coelho"
-def batalha(random_animal): ########################
-    pass
+    return vida_e, item_e
+def batalha(animal, dano, vida):
+    if animal == 'a Ave':
+        animal = 'ave'
+    elif animal == ' Javali':
+        animal = 'javali'
+    elif animal == ' Cobra':
+        animal = 'cobra'
+    elif animal == ' Coelho':
+        animal = 'coelho'
 
 
 inventario= list()
@@ -205,7 +217,7 @@ batalhas = 0
 xp_e, vida_e, sorte_e, item_e, dano_e, level_e, nome, classe = basico()
 
 xp, vida, sorte, dano, level = xp_e + xp, vida_e + vida, sorte_e + sorte, dano_e + dano, level_e + level
-xp_e, vida_e, sorte_e, dano_e, level_e= 0,0,0,0,0
+xp_e, vida_e, sorte_e, dano_e, level_e= 0, 0, 0, 0, 0
 if item_e == None:
     pass
 else:
