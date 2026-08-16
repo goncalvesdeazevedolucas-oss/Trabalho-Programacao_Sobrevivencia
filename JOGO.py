@@ -3,7 +3,7 @@ import time
 import msvcrt #StackOverFlow
 import unicodedata #Video Youtube
 import os #Alisson 
-from funcoes import criar_funcoes
+# from funcoes import *
 
 def afk():
     xp_afk= 0
@@ -21,11 +21,12 @@ def afk():
         if msvcrt.kbhit():
             msvcrt.getch()
             limpar()
-            break
-        return xp_afk
+            return xp_afk        
 def chamar_status(xp,vida,sorte,dano,level,nome,inventario,classe):
     print(f"Nome: {nome}")
-    print(f"Inventario: {"".join(inventario)}")
+    for i in inventario:
+        idx= inventario.index(i)
+        print(inventario.index(i)+1,  "".join(inventario[idx]))
     print(f"Classe: {classe}")
     print(f"""
         Xp={xp}
@@ -108,33 +109,35 @@ def basico():
                 continue
         limpar()
         return xp_e, vida_e, sorte_e, item_e, dano_e, level_e, nome, classe        
-def opcoes(sorte):
+def opcoes(sorte,dano,vida, inventario):
         print("""
             O que você irá fazer ??
     1-Buscar recursos | 2-Ver Perfil | 3-Esperar por um Animal
-                4- Parar o Jogo
+               4- Usar Item | 5- Parar o Jogo
             """)
         choose= input("Escolha: ")
         if choose == '1':
-            opcoes()
+            pass
         elif choose == '2':
-            chamar_status(xp,vida,sorte,dano,level,nome,inventario.index(+1),classe)
+            chamar_status(xp,vida,sorte,dano,level,nome,inventario,classe)
             print("Aperte Qualquer tecla para continuar")
-            if msvcrt.kbhit():
-                msvcrt.getch()
-                limpar()
-                opcoes()
-        elif choose == '3':
-            animal(sorte)
-        elif choose == '4':
+            while not msvcrt.kbhit():
+                time.sleep(0.1)
+            msvcrt.getch()
             limpar()
-            
-            return -1 #BREAK 
-            
+            opcoes(sorte,dano,vida,inventario)
+        elif choose == '3':
+            return animal(sorte, dano, vida)
+        elif choose == '4':
+                return 5, 0, None, 0
+                
+        elif choose == '5':
+            limpar()
+            return -1, 0, None, 0 #BREAK 
         else:
             limpar()
-            print("Opção Inválida")
-            return 0
+            print("Opção Inválida (Apenas Números São Válidos)")
+            return 0 , 0, None, 0
 def animal(sorte,dano,vida):
     while True:
         chance= random.randint(1,30)
@@ -156,35 +159,35 @@ def animal(sorte,dano,vida):
                             1 - Correr
                             2 - Batalhar
                             """)
-                if normal(choose) == "1" or "correr":
+                if normal(choose) == "1" or normal(choose) == "CORRER":
                     print("Você perde 2 de vida por cansaço")
-                    return 0, -2, None
-                elif normal(choose) =="2" or "batalhar":
-                    vida_e, item_e = batalha(animal,dano,vida)
-                    return 0, vida_e, item_e
+                    return 0, -2, None,0
+                elif normal(choose) =="2" or normal(choose) == "BATALHAR":
+                    vida_e, item_e, xp_e = batalha(animal,dano,vida)
+                    return 0, vida_e, item_e, xp_e
                 else:
                     limpar()
                     continue
         elif chance in range(6,20):
             print("Nenhum animal apareceu")
             time.sleep(1.5)
-            
-            break
+            return 0,0,None,0
         elif chance in range(21,28):
             print(f"Um{animal} Apareceu mas você o Espantou")
-            break
+            time.sleep(1.5)
+            return 0,0,None, 50
         else:
             print(f"Nada Aparece e você é picado por Aranha")
             if sorte <= 20:
-                return 1, -8, None#-8 de vida
+                return 1, -8, None, 10#-8 de vida
             elif sorte <= 40:
-                return 2, -4, None #-4 de vida
+                return 2, -4, None, 10 #-4 de vida
             elif sorte >= 80:
-                return 3, 0, None # -0 de vida
-            elif sorte >=50:
-                return 4, -1, None # -1 de vida
+                return 3, 0, None,10 # -0 de vida
+            elif sorte >=41:
+                return 4, -1, None,10 # -1 de vida
 def random_animal():
-    animal= random.randint(1,5)
+    animal= random.randint(1,4)
     if animal == 1:
         return "a Ave"
     elif animal == 2:
@@ -193,17 +196,134 @@ def random_animal():
         return " Cobra"
     elif animal == 4:
         return " Coelho"
-    return vida_e, item_e
 def batalha(animal, dano, vida):
+    vida_perdida= 0
     if animal == 'a Ave':
-        animal = 'ave'
+        animal = 'Ave'
+        pron='a'
+        item_e= "Carne"
+        vida_animal= 20
+        xp_e= 200
     elif animal == ' Javali':
-        animal = 'javali'
+        animal = 'Javali'
+        pron='o'
+        item_e= "Presa"
+        vida_animal= 40
+        xp_e= 700
     elif animal == ' Cobra':
-        animal = 'cobra'
+        animal = 'Cobra'
+        pron= 'a'
+        item_e= "Carne"
+        vida_animal= 30
+        xp_e= 400
     elif animal == ' Coelho':
-        animal = 'coelho'
-
+        animal = 'Coelho'
+        pron='o'
+        xp_e= 150
+        vida_animal= 15
+        ie= random.randint(1,7)
+        if ie == 6:
+            item_e= "Pé de Coelho"
+        else:
+            item_e= "Carne"
+    while True:
+        limpar()
+        if vida_perdida + vida <= 0:
+            return vida_perdida, None, xp_e
+        if vida_animal <= 0.9999999999:
+            return vida_perdida, item_e, xp_e
+        print(f"Vida perdida: {vida_perdida}")
+        print(f"Vida do Animal: {int(vida_animal)}")
+        choose=input(""" O que você quer fazer??? 
+                        1 - Atacar  2 - Fugir         
+                    """)
+        if choose == "2" or normal(choose) == "FUGIR":
+            return vida_perdida, None,xp_e
+        elif choose == "1" or normal(choose) == "ATACAR":
+            chance= random.uniform(0,11)
+            if chance <= 1:
+                print("Ataque pegou + Contra-ataque de raspão")
+                vida_animal += -dano
+                vida_perdida+=-1
+            elif chance <= 2:
+                print("O Ataque pega de Raspão")
+                vida_animal += -dano/2
+            elif chance <= 3:
+                print("Dano Crítico")
+                vida_animal += -(dano*2)
+            elif chance <= 4:
+                print("Errou o Ataque")
+                vida_animal += 0
+            elif chance <= 5:
+                print(f"Você erra o ataque e {pron} {animal} tem tempo de se recuperar")
+                vida_animal+= dano/4
+            elif chance <=6:
+                print("Acerto em Cheio")
+                vida_animal+= -(dano*1.5)
+            elif chance <=7:
+                print("Acerto")
+                vida_animal += -dano
+            elif chance <= 8:
+                print("Errou e Recebeu um Contra Ataque")
+                vida_perdida += -10
+            elif chance <= 9:
+                print("Acerto Fraco")
+                vida_animal+= -(dano/3)
+            elif chance <= 9.25:
+                print("Dano Fatal")
+                vida_animal += -(dano*5)
+            elif chance <= 9.30:
+                print("Contra-Ataque Fatal")
+                vida_perdida += -9999
+            else:
+                print("Errou o Ataque")
+        else:
+            continue
+def usar_item(inventario):
+    print("Inventário:")
+    for i in inventario:
+        idx= inventario.index(i)
+        print(inventario.index(i)+1,  "".join(inventario[idx]))
+    item_usado= None
+    while True:
+        print("Qual Item Deseja Usar")
+        print("Digite CANCELAR para Cancelar")
+        choose = input('Escolha:')
+        if normal(choose) == "CANCELAR":
+            return 0, 0, 0, None
+        if choose.isdigit():
+            idx = int(choose)
+            if idx < 1 or idx > len(inventario):
+                print("Opção inválida")
+                continue
+            choose = inventario[idx - 1]
+        if normal(choose) == "CARNE":
+            item_usado ="Carne"
+            vida_e= 20
+            dano_e= 0
+            sorte_e= 0
+            return vida_e, dano_e, sorte_e, item_usado
+        elif normal(choose) == "PRESA":
+            item_usado="Presa"
+            vida_e= 0
+            dano_e = 5
+            sorte_e= 0
+            return vida_e, dano_e, sorte_e, item_usado
+        elif normal(choose) == "PE DE COELHO":
+            item_usado="Pé de Coelho"
+            vida_e= 0
+            dano_e = 0
+            sorte_e= 20
+            return vida_e, dano_e, sorte_e, item_usado
+        elif normal(choose) == "MEDKIT":
+            item_usado="Medkit"
+            vida_e = 0 
+            dano_e = 0
+            sorte_e= 0
+            return vida_e, dano_e, sorte_e, item_usado
+        else:
+            print("Opção inválida")
+            continue
 
 inventario= list()
 xp = 0
@@ -211,8 +331,6 @@ vida = random.randint(15,25)
 sorte = random.randint(0,50)
 dano= 10
 level = 1
-fugiu = 0
-batalhas = 0
 
 xp_e, vida_e, sorte_e, item_e, dano_e, level_e, nome, classe = basico()
 
@@ -226,7 +344,12 @@ else:
 item_e= None
 
 while True:
-    xp, vida, sorte, dano, level = xp_e + xp, vida_e + vida, sorte_e + sorte, dano_e + dano, level_e + level
+    xp, vida, sorte, dano= xp_e + xp, vida_e + vida, sorte_e + sorte, dano_e + dano
+    while xp >= 1000:
+        level += 1
+        dano += 1
+        vida += 3
+        xp -= 1000
     if item_e == None:
         pass
     else:
@@ -239,21 +362,29 @@ while True:
         print("Morreu")
         break
     
-    a, vida_e, item_e = opcoes(sorte)
+    escolhido, vida_e, item_e, xp_e= opcoes(sorte, dano, vida, inventario)
     
-    if a == -1:
+    if escolhido == -1:
         limpar()
         print("Jogo Encerrado")
         break
-    elif a == 1:
+    elif escolhido == 1:
         print("Você perdeu -8 de Vida")
-    elif a == 2:
+    elif escolhido == 2:
         print("Você perdeu -4 de Vida")
-    elif a == 3:
+    elif escolhido == 3:
         print("Você não perdeu Vida, Que Sorte")
-    elif a == 4:
+    elif escolhido == 4:
         print("Você perdeu -1 de Vida")
-    elif a == 0:
+    elif escolhido == 0:
         continue
-
+    elif escolhido == 5:
+        vida_e,dano_e,sorte_e,item_usado=usar_item(inventario)
+        if item_usado == None:
+            pass
+        elif item_usado == "Medkit":
+            inventario.remove(item_usado)
+            vida = 50
+        else:
+            inventario.remove(item_usado)
 
