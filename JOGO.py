@@ -321,10 +321,73 @@ def usar_item(inventario):
             dano_e = 0
             sorte_e= 0
             return vida_e, dano_e, sorte_e, item_usado
+        elif normal(choose) == "AGUA":
+            item_usado = "Água"
+            vida_e = 10
+            dano_e = 0
+            sorte_e = 0
+            return vida_e, dano_e, sorte_e, item_usado
+        elif normal(choose) == "ERVAS MEDICINAIS":
+            item_usado = "Ervas Medicinais"
+            vida_e = 15
+            dano_e = 0
+            sorte_e = 0
+            return vida_e, dano_e, sorte_e, item_usado
+        elif normal(choose) == "FACA":
+            item_usado = "Faca"
+            vida_e = 0
+            dano_e = 3
+            sorte_e = 0
+            return vida_e, dano_e, sorte_e, item_usado
         else:
             print("Opção inválida")
             continue
+def random_recurso():
+    item = random.randint(1,6)
+    if item == 1:
+        return "Carne"
+    elif item == 2:
+        return "Presa"
+    elif item == 3:
+        return "Pé de Coelho"
+    elif item == 4:
+        return "Água"
+    elif item == 5:
+        return "Ervas Medicinais"
+    else:
+        return "Faca"
+def buscar_recursos(sorte):
+    bonus_sorte = sorte // 10
+    chance = random.randint(1,20) - bonus_sorte
+    if chance < 1:
+        chance = 1
 
+    if chance in range(1,6):
+        item = random_recurso()
+        print(f"Você encontrou: {item}")
+        return 0, 0, item, 30 + bonus_sorte
+    elif chance in range(6,9):
+        print("Você encontrou um pouco de comida no caminho")
+        return 0, 0, "Carne", 20 + bonus_sorte
+    elif chance in range(9,12):
+        print("Você achou uma fonte de água")
+        return 0, 0, "Água", 15 + bonus_sorte
+    elif chance in range(12,15):
+        print("Você achou algumas ervas medicinais")
+        return 0, 0, "Ervas Medicinais", 20 + bonus_sorte
+    elif chance in range(15,17):
+        print("Você achou uma faca no chão")
+        return 0, 0, "Faca", 40 + bonus_sorte
+    elif chance in range(17,19):
+        print("Você se machucou procurando recursos")
+        return 0, -3, None, 10
+    elif chance == 19:
+        print("Você procurou mas não achou nada")
+        return 0, 0, None, 5
+    else:
+        print("Você caiu numa armadilha e se feriu")
+        return 0, -10, None, 0
+    
 inventario= list()
 xp = 0
 vida = random.randint(15,25)
