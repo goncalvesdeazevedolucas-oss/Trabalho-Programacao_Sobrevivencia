@@ -3,7 +3,7 @@ import time
 import msvcrt #StackOverFlow
 import unicodedata #Video Youtube
 import os #Alisson 
-# from funcoes import *
+
 
 def afk():
     xp_afk= 0
@@ -24,9 +24,8 @@ def afk():
             return xp_afk        
 def chamar_status(xp,vida,sorte,dano,level,nome,inventario,classe):
     print(f"Nome: {nome}")
-    for i in inventario:
-        idx= inventario.index(i)
-        print(inventario.index(i)+1,  "".join(inventario[idx]))
+    for idx, i in enumerate(inventario, start=1):
+        print(idx, i)
     print(f"Classe: {classe}")
     print(f"""
         Xp={xp}
@@ -117,7 +116,7 @@ def opcoes(sorte,dano,vida, inventario):
             """)
         choose= input("Escolha: ")
         if choose == '1':
-            pass
+            return buscar_recursos(sorte)
         elif choose == '2':
             chamar_status(xp,vida,sorte,dano,level,nome,inventario,classe)
             print("Aperte Qualquer tecla para continuar")
@@ -125,7 +124,7 @@ def opcoes(sorte,dano,vida, inventario):
                 time.sleep(0.1)
             msvcrt.getch()
             limpar()
-            opcoes(sorte,dano,vida,inventario)
+            return opcoes(sorte,dano,vida,inventario)
         elif choose == '3':
             return animal(sorte, dano, vida)
         elif choose == '4':

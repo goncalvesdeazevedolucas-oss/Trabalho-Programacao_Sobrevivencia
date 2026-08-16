@@ -1,5 +1,4 @@
 import unicodedata, time, random
-from funcoes import criar_funcoes
 def normal(palavra):        #https://www.youtube.com/watch?v=ZPqb8k76sK4&t=437s
     nfdk_normalizacao= unicodedata.normalize('NFKD', palavra)
     return ''.join([x for x in nfdk_normalizacao if not unicodedata.combining(x)]).upper()
@@ -46,31 +45,33 @@ classe= 'teste'
 # for i in inventario:
 #     idx= inventario.index(i)
 #     print(inventario.index(i)+1,  "".join(inventario[idx]))
-# 
-print("Inventário:")
-for i in inventario:
-    idx = inventario.index(i)
-    print(inventario.index(i)+1, "".join(inventario[idx]))
+# # 
+# print("Inventário:")
+# for i in inventario:
+#     idx = inventario.index(i)
+#     print(inventario.index(i)+1, "".join(inventario[idx]))
 
-while True:
-    print("Qual Item Deseja Usar")
-    print("Digite CANCELAR para Cancelar")
-    choose = input('Escolha:')
-    if normal(choose) == "CANCELAR":
-        break
-    if choose.isdigit():
-        idx = int(choose)
-        if idx < 1 or idx > len(inventario):
-            print("Opção inválida")
-            continue
-        choose = inventario[idx - 1]
-    if normal(choose) == "PAO":
-        item_usado = "pao"
-        break
-    elif normal(choose) == "BATATA":
-        item_usado = "batata"
-        break
-    else:
-        continue
+# while True:
+#     print("Qual Item Deseja Usar")
+#     print("Digite CANCELAR para Cancelar")
+#     choose = input('Escolha:')
+#     if normal(choose) == "CANCELAR":
+#         break
+#     if choose.isdigit():
+#         idx = int(choose)
+#         if idx < 1 or idx > len(inventario):
+#             print("Opção inválida")
+#             continue
+#         choose = inventario[idx - 1]
+#     if normal(choose) == "PAO":
+#         item_usado = "pao"
+#         break
+#     elif normal(choose) == "BATATA":
+#         item_usado = "batata"
+#         break
+#     else:
+#         continue
 
-print(item_usado)
+# print(item_usado)
+for idx, i in enumerate(inventario, start=1):
+    print(idx, i)
