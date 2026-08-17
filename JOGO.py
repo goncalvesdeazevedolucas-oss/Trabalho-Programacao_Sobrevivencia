@@ -108,7 +108,7 @@ def basico():
                 continue
         limpar()
         return xp_e, vida_e, sorte_e, item_e, dano_e, level_e, nome, classe        
-def opcoes(sorte,dano,vida, inventario):
+def opcoes(xp,vida,sorte,dano,level,nome,inventario,classe):
         print("""
             O que você irá fazer ??
     1-Buscar recursos | 2-Ver Perfil | 3-Esperar por um Animal
@@ -124,7 +124,7 @@ def opcoes(sorte,dano,vida, inventario):
                 time.sleep(0.1)
             msvcrt.getch()
             limpar()
-            return opcoes(sorte,dano,vida,inventario)
+            return opcoes(xp,vida,sorte,dano,level,nome,inventario,classe)
         elif choose == '3':
             return animal(sorte, dano, vida)
         elif choose == '4':
@@ -455,7 +455,7 @@ while True:
         print("Morreu")
         break
     
-    escolhido, vida_e, item_e, xp_e= opcoes(sorte, dano, vida, inventario)
+    escolhido, vida_e, item_e, xp_e= opcoes(xp,vida,sorte,dano,level,nome,inventario,classe)
     
     if escolhido == -1:
         limpar()
@@ -477,6 +477,8 @@ while True:
             pass
         elif item_usado == "Medkit":
             inventario.remove(item_usado)
+            print("Sua Vida foi definida para 50")
+            print(f"Vida anterior: {vida}")
             vida = 50
         else:
             inventario.remove(item_usado)
