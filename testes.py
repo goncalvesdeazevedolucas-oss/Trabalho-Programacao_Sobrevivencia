@@ -73,5 +73,6 @@ classe= 'teste'
 #         continue
 
 # print(item_usado)
-for idx, i in enumerate(inventario, start=1):
-    print(idx, i)
+# for idx, i in enumerate(inventario, start=1):
+#     print(idx, i)
+print(normal("ç"))

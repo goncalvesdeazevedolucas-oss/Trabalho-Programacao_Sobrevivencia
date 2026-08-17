@@ -112,7 +112,7 @@ def opcoes(sorte,dano,vida, inventario):
         print("""
             O que você irá fazer ??
     1-Buscar recursos | 2-Ver Perfil | 3-Esperar por um Animal
-               4- Usar Item | 5- Parar o Jogo
+        4- Usar Item |5- Craftar Itens| 6- Parar o Jogo
             """)
         choose= input("Escolha: ")
         if choose == '1':
@@ -129,8 +129,9 @@ def opcoes(sorte,dano,vida, inventario):
             return animal(sorte, dano, vida)
         elif choose == '4':
                 return 5, 0, None, 0
-                
-        elif choose == '5':
+        elif choose == "5":
+            return 6,0,None,0
+        elif choose == '6':
             limpar()
             return -1, 0, None, 0 #BREAK 
         else:
@@ -338,6 +339,16 @@ def usar_item(inventario):
             dano_e = 3
             sorte_e = 0
             return vida_e, dano_e, sorte_e, item_usado
+        elif normal(choose) == "GRAVETO":
+            print("Você não pode usar Graveto")
+            print("Tente Usar-lo talvez nos crafts")
+            continue
+        elif normal(choose) == "LANCA":
+            item_usado= "Lança"
+            vida_e =0
+            dano_e = 15
+            sorte_e = 0
+            return vida_e, dano_e, sorte_e, item_usado
         else:
             print("Opção inválida")
             continue
@@ -357,7 +368,7 @@ def random_recurso():
         return "Faca"
 def buscar_recursos(sorte):
     bonus_sorte = sorte // 10
-    chance = random.randint(1,20) - bonus_sorte
+    chance = random.randint(1,21) - bonus_sorte
     if chance < 1:
         chance = 1
 
@@ -383,10 +394,30 @@ def buscar_recursos(sorte):
     elif chance == 19:
         print("Você procurou mas não achou nada")
         return 0, 0, None, 5
+    elif chance == 20:
+        print("Você achou um Graveto")
+        return 0,0, "Graveto", 100 + bonus_sorte
     else:
         print("Você caiu numa armadilha e se feriu")
         return 0, -10, None, 0
-    
+def craftar(inventario):
+    print("O que você deseja Craftar??")
+    print("""1 - Lança (1-Presa, 1-Graveto)
+             2 - ??? (???)      
+          """)
+    while True:
+        choose=input("""""")
+        if choose == "1" or normal(choose)== "LANCA":
+            if "Presa" and "Graveto" in inventario == True:
+                return "Lança"
+            else:
+                print("Você Não Tem Recursos Suficiente")
+        elif choose == "2" or choose == "???":
+            print("Esse Item não foi Lançado")
+            return None
+        else:
+            print("Opção Inválida")
+            continue
 inventario= list()
 xp = 0
 vida = random.randint(15,25)
@@ -449,4 +480,10 @@ while True:
             vida = 50
         else:
             inventario.remove(item_usado)
-
+    elif escolhido == 6:
+        item=craftar(inventario)
+        if item == None:
+            continue
+        if item == "Lança":
+            inventario.append("Lança")
+        
